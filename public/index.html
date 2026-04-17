@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Transfer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>File Transfer</h1>
+
+    <div id="uploadSection">
+      <div class="section-header">
+        <h2>Upload File</h2>
+        <span class="help-icon" title="Drag and drop a file or click to browse. Files expire after 24 hours.">?</span>
+      </div>
+
+      <div id="dropZone" class="drop-zone">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        <p>Drag and drop file here</p>
+        <p class="or">or</p>
+        <button id="browseBtn" class="btn-primary">Browse Files</button>
+        <input type="file" id="fileInput" hidden>
+      </div>
+
+      <div id="uploadProgress" class="hidden">
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <p id="progressText">Uploading...</p>
+      </div>
+    </div>
+
+    <div id="resultSection" class="hidden">
+      <div class="section-header">
+        <h2>Share File</h2>
+        <span class="help-icon" title="Share the code or QR code with the recipient. Link expires in 24 hours.">?</span>
+      </div>
+
+      <div class="result-content">
+        <div class="code-display">
+          <label>Retrieval Code</label>
+          <div class="code-box">
+            <span id="codeText"></span>
+            <button id="copyBtn" class="btn-icon" title="Copy code">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="qr-display">
+          <label>QR Code</label>
+          <img id="qrCode" alt="QR Code">
+        </div>
+
+        <button id="uploadAnotherBtn" class="btn-secondary">Upload Another File</button>
+      </div>
+    </div>
+
+    <div id="downloadSection">
+      <div class="section-header">
+        <h2>Download File</h2>
+        <span class="help-icon" title="Enter the 6-digit code you received to download the file.">?</span>
+      </div>
+
+      <div class="download-form">
+        <input type="text" id="downloadCode" placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}">
+        <button id="downloadBtn" class="btn-primary">Download</button>
+      </div>
+      <p id="downloadError" class="error hidden"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
