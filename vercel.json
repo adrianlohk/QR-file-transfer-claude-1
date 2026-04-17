@@ -11,7 +11,8 @@
       "src": "/(.*)",
       "dest": "server.js"
     }
-  ]
-}git add vercel.json
-git commit -m "Add Vercel configuration"
-git push origin main
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
