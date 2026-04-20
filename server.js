@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: '/tmp/' });
 
 const files = new Map();
 

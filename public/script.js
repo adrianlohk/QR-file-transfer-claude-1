@@ -32,6 +32,15 @@ dropZone.addEventListener('drop', (e) => {
   handleFile(e.dataTransfer.files[0]);
 });
 
+async function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 async function handleFile(file) {
   if (!file) return;
 
@@ -39,15 +48,25 @@ async function handleFile(file) {
   progressFill.style.width = '0%';
   progressText.textContent = 'Uploading...';
 
-  const formData = new FormData();
-  formData.append('file', file);
-
   try {
-    progressFill.style.width = '50%';
+    progressFill.style.width = '30%';
 
-    const response = await fetch('/upload', {
+    // Convert file to base64
+    const base64File = await fileToBase64(file);
+
+    progressFill.style.width = '60%';
+
+    // Send to API
+    const response = await fetch('/api/upload', {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        file: base64File,
+        fileName: file.name,
+        mimeType: file.type,
+      }),
     });
 
     progressFill.style.width = '100%';
@@ -66,6 +85,7 @@ async function handleFile(file) {
     }, 500);
 
   } catch (error) {
+    console.error('Upload error:', error);
     progressText.textContent = 'Upload failed. Please try again.';
     progressText.style.color = '#d93025';
   }
@@ -98,7 +118,7 @@ downloadBtn.addEventListener('click', () => {
     return;
   }
 
-  window.location.href = `/download?code=${code}`;
+  window.location.href = `/api/download?code=${code}`;
 });
 
 downloadCode.addEventListener('keypress', (e) => {
